@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: skillShare
+          uri: lb://skillShare
+          predicates:
+            - Path=/api/**
+          filters:
+            - name: AuthenticationFilter
+
+        - id: IdentityServer
+          uri: lb://IdentityServer
+          predicates:
+            - Path=/auth/**
+
+#  main:
+#    web-application-type: reactive
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+jwt:
+  secret: VHKJMNnbfhbsjkdbVJHVkhbJBKJBsmfnbngygiyguFYVHJbkjnjnsjdnlkfn
